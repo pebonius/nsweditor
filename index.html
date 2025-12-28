@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./style.css" />
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+    <title>nsweditor</title>
+  </head>
+  <body>
+    <main id="editor-container">
+      <div id="room-list-container">
+        <p>rooms</p>
+        <ul id="room-list">
+          <li>some room</li>
+          <button id="add-room-button">add room</button>
+        </ul>
+      </div>
+      <div id="room-preview">
+        <h1 id="room-description">some description</h1>
+        <button class="exit-button button-wide" id="north-exit-button">
+          north
+        </button>
+        <button class="exit-button button-wide" id="south-exit-button">
+          south
+        </button>
+        <button class="exit-button button-tall" id="west-exit-button">
+          west
+        </button>
+        <button class="exit-button button-tall" id="east-exit-button">
+          east
+        </button>
+      </div>
+      <div id="json-code-container">
+        <p>data.json</p>
+        <textarea id="json-code" readonly>placeholder</textarea>
+      </div>
+      <div id="room-props-container">
+        <p>room props</p>
+        <ul id="room-props">
+          <li>
+            <label for="room-id-input">id:</label>
+            <input type="text" id="room-id-input" />
+          </li>
+          <li>
+            <label for="room-textcolor-input">text color:</label>
+            <input type="text" id="room-textcolor-input" />
+          </li>
+          <li>
+            <label for="room-backgroundcolor-input">background color:</label>
+            <input type="text" id="room-backgroundcolor-input" />
+          </li>
+          <li>
+            <label for="room-description-input">description:</label>
+            <textarea id="room-description-input"></textarea>
+          </li>
+          <li>
+            <label for="north-exit-checkbox">north exit:</label>
+            <input type="checkbox" id="north-exit-checkbox" />
+            <input type="text" id="north-exit-label-input" />
+            <select id="north-exit-linkto-select">
+              <option value="placeholder">placeholder</option>
+              <option value="placeholder">placeholder</option>
+              <option value="placeholder">placeholder</option>
+            </select>
+          </li>
+          <li>
+            <label for="south-exit-checkbox">south exit:</label>
+            <input type="checkbox" id="south-exit-checkbox" />
+            <input type="text" id="south-exit-label-input" />
+            <select id="south-exit-linkto-select">
+              <option value="placeholder">placeholder</option>
+              <option value="placeholder">placeholder</option>
+              <option value="placeholder">placeholder</option>
+            </select>
+          </li>
+          <li>
+            <label for="west-exit-checkbox">west exit:</label>
+            <input type="checkbox" id="west-exit-checkbox" />
+            <input type="text" id="west-exit-label-input" />
+            <select id="west-exit-linkto-select">
+              <option value="placeholder">placeholder</option>
+              <option value="placeholder">placeholder</option>
+              <option value="placeholder">placeholder</option>
+            </select>
+          </li>
+          <li>
+            <label for="east-exit-checkbox">east exit:</label>
+            <input type="checkbox" id="east-exit-checkbox" />
+            <input type="text" id="east-exit-label-input" />
+            <select id="east-exit-linkto-select">
+              <option value="placeholder">placeholder</option>
+              <option value="placeholder">placeholder</option>
+              <option value="placeholder">placeholder</option>
+            </select>
+          </li>
+        </ul>
+      </div>
+    </main>
+  </body>
+  <script type="module" src="./source/nsweditor.js"></script>
+</html>

@@ -1,0 +1,144 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  width: 100%;
+  height: 100vh;
+  text-align: center;
+  background-color: gainsboro;
+  color: black;
+}
+
+#editor-container {
+  width: 100%;
+  height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 3fr 2fr;
+  grid-template-rows: 2fr 1fr;
+  column-rule: solid blue;
+  overflow: hidden;
+}
+
+#room-list-container {
+  max-height: 100%;
+  grid-row: 1 / 3;
+  border: 1px solid black;
+}
+
+#room-list {
+  max-height: 100%;
+  list-style: none;
+  overflow-y: scroll;
+}
+
+#room-list li {
+  border: 1px solid black;
+  background-color: white;
+  padding: 10px;
+}
+
+#json-code-container {
+  border: 1px solid black;
+  grid-column: 3;
+  grid-row: 1 / 3;
+}
+
+#json-code {
+  width: 100%;
+  height: 95%;
+  resize: none;
+}
+
+#room-props-container {
+  max-height: 100%;
+  grid-column: 2;
+  grid-row: 2;
+  border: 1px solid black;
+}
+
+#room-props {
+  text-align: left;
+  list-style: none;
+}
+
+#room-props li {
+  padding: 4px;
+}
+
+#room-props textarea {
+  resize: none;
+  width: 100%;
+  height: 100%;
+}
+
+/* ROOM PREVIEW */
+#room-preview {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-color: cornflowerblue;
+  color: white;
+  overflow: hidden;
+}
+
+#room-description {
+  font-size: 150%;
+  font-weight: 500;
+  max-width: 75%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.exit-button {
+  font-size: large;
+  background-color: transparent;
+  color: inherit;
+  font-family: inherit;
+  text-align: center;
+  border: none;
+}
+
+.button-wide {
+  width: 60%;
+  height: 20%;
+}
+
+.button-tall {
+  width: 20%;
+  height: 70%;
+}
+
+#north-exit-button {
+  position: absolute;
+  top: 0%;
+  left: 50%;
+  transform: translate(-50%, 0%);
+}
+
+#south-exit-button {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translate(-50%, -100%);
+}
+
+#west-exit-button {
+  position: absolute;
+  top: 50%;
+  left: 0%;
+  transform: translate(0%, -50%);
+}
+
+#east-exit-button {
+  position: absolute;
+  top: 50%;
+  left: 100%;
+  transform: translate(-100%, -50%);
+}
