@@ -41,6 +41,11 @@ body {
   padding: 10px;
 }
 
+#room-list .selected {
+  background-color: gray;
+  font-weight: bold;
+}
+
 #json-code-container {
   border: 1px solid black;
   grid-column: 3;

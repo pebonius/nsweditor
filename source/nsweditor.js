@@ -2,17 +2,29 @@ import RoomPreview from "./roomPreview.js";
 
 const rooms = [];
 const roomPreview = new RoomPreview(rooms);
-
-const startingRoom = {
-  id: 0,
-  textColor: "linen",
-  backgroundColor: "darkgoldenrod",
-  description: "last night i had a dream about coding a game engine",
-  north: {
-    label: "really?",
-    linkTo: 1,
+const startingRooms = [
+  {
+    id: 0,
+    textColor: "linen",
+    backgroundColor: "darkgoldenrod",
+    description: "last night i had a dream about coding a game engine",
+    north: {
+      label: "really?",
+      linkTo: 1,
+    },
   },
-};
+  {
+    id: 1,
+    textColor: "white",
+    backgroundColor: "royalblue",
+    description: "yes, really",
+    south: {
+      label: "ok",
+      linkTo: 0,
+    },
+  },
+];
+let currentRoomId = startingRooms[0].id;
 
 // UI elements
 const roomList = document.querySelector("#room-list");
@@ -51,14 +63,39 @@ function displayJson() {
   jsonCodeArea.textContent = json;
 }
 
+function displayList() {
+  const newListChildren = [];
+
+  rooms.forEach((room) => {
+    const newLi = document.createElement("li");
+    newLi.innerText = `${room.id}`;
+    newLi.onclick = () => {
+      selectRoom(room.id);
+    };
+    if (room.id === currentRoomId) {
+      newLi.classList.add("selected");
+    }
+    newListChildren.push(newLi);
+  });
+
+  roomList.replaceChildren(...newListChildren);
+}
+
+function selectRoom(id) {
+  currentRoomId = id;
+  roomPreview.currentRoomId = id;
+  updateUI();
+}
+
 function updateUI() {
   displayJson();
+  displayList();
+  roomPreview.displayCurrentRoom();
 }
 
 function initialize() {
-  rooms.push(startingRoom);
+  rooms.push(...startingRooms);
   updateUI();
-  roomPreview.displayCurrentRoom();
 }
 
 initialize();
