@@ -72,6 +72,9 @@ export default class Nsweditor {
       "#east-exit-linkto-select"
     );
   }
+  get currentRoom() {
+    return this.rooms.find((room) => room.id === this.currentRoomId);
+  }
   get newRoomId() {
     const numericalRoomIds = [];
     this.rooms.forEach((room) => {
@@ -100,6 +103,7 @@ export default class Nsweditor {
     this.displayJson();
     this.displayList();
     this.roomPreview.displayCurrentRoom();
+    this.updatePropInputs();
   }
   displayJson() {
     const json = JSON.stringify(this.rooms, undefined, 4);
@@ -130,5 +134,31 @@ export default class Nsweditor {
   addNewRoom() {
     this.rooms.push(this.newRoom);
     this.updateUI();
+  }
+  updatePropInputs() {
+    this.roomIdInput.value = this.currentRoom.id;
+    this.roomTextColorInput.value = this.currentRoom.textColor;
+    this.roomBackgroundColorInput.value = this.currentRoom.backgroundColor;
+    this.roomDescriptionInput.value = this.currentRoom.description;
+    this.northExitCheckbox.checked = this.currentRoom.north;
+    this.southExitCheckbox.checked = this.currentRoom.south;
+    this.westExitCheckbox.checked = this.currentRoom.west;
+    this.eastExitCheckbox.checked = this.currentRoom.east;
+    this.northExitLabelInput.value =
+      this.currentRoom.north && this.currentRoom.north.label
+        ? this.currentRoom.north.label
+        : "";
+    this.southExitLabelInput.value =
+      this.currentRoom.south && this.currentRoom.south.label
+        ? this.currentRoom.south.label
+        : "";
+    this.westExitLabelInput.value =
+      this.currentRoom.west && this.currentRoom.west.label
+        ? this.currentRoom.west.label
+        : "";
+    this.eastExitLabelInput.value =
+      this.currentRoom.east && this.currentRoom.east.label
+        ? this.currentRoom.east.label
+        : "";
   }
 }
