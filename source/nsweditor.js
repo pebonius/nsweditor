@@ -131,7 +131,8 @@ export default class Nsweditor {
 
     this.rooms.forEach((room) => {
       const newLi = document.createElement("li");
-      newLi.innerText = `${room.id}`;
+      const startingRoomLabel = room.id === 0 ? " [starting room]" : "";
+      newLi.innerText = `${room.id}${startingRoomLabel}`;
       newLi.onclick = () => {
         this.selectRoom(room.id);
       };
@@ -154,6 +155,7 @@ export default class Nsweditor {
   }
   updatePropInputs() {
     this.roomIdInput.value = this.currentRoom.id;
+    this.roomIdInput.disabled = this.currentRoomId === 0;
     this.roomTextColorInput.value = this.currentRoom.textColor;
     this.roomBackgroundColorInput.value = this.currentRoom.backgroundColor;
     this.roomDescriptionInput.value = this.currentRoom.description;
