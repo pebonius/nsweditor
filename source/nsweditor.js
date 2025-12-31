@@ -1,33 +1,34 @@
 import RoomPreview from "./roomPreview.js";
 
 export default class Nsweditor {
+  #startingRooms = [
+    {
+      id: 0,
+      textColor: "linen",
+      backgroundColor: "darkgoldenrod",
+      description: "last night i had a dream about coding a game engine",
+      north: {
+        label: "really?",
+        linkTo: 1,
+      },
+    },
+    {
+      id: 1,
+      textColor: "white",
+      backgroundColor: "royalblue",
+      description: "yes, really",
+      south: {
+        label: "ok",
+        linkTo: 0,
+      },
+    },
+  ];
+
   constructor() {
     this.rooms = [];
     this.roomPreview = new RoomPreview(this.rooms);
-    this.startingRooms = [
-      {
-        id: 0,
-        textColor: "linen",
-        backgroundColor: "darkgoldenrod",
-        description: "last night i had a dream about coding a game engine",
-        north: {
-          label: "really?",
-          linkTo: 1,
-        },
-      },
-      {
-        id: 1,
-        textColor: "white",
-        backgroundColor: "royalblue",
-        description: "yes, really",
-        south: {
-          label: "ok",
-          linkTo: 0,
-        },
-      },
-    ];
-    this.rooms.push(...this.startingRooms);
-    this.currentRoomId = this.startingRooms[0].id;
+    this.rooms.push(...this.#startingRooms);
+    this.currentRoomId = this.#startingRooms[0].id;
 
     // UI elements
     this.roomList = document.querySelector("#room-list");
