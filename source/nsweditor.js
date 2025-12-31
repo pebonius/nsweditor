@@ -1,4 +1,5 @@
 import RoomPreview from "./roomPreview.js";
+import { stringContainsAlphanumericOnly } from "./utilities.js";
 
 export default class Nsweditor {
   #startingRooms = [
@@ -75,15 +76,24 @@ export default class Nsweditor {
   get currentRoom() {
     return this.rooms.find((room) => room.id === this.currentRoomId);
   }
-  get newRoomId() {
-    const numericalRoomIds = [];
+  get allRoomIds() {
+    const allIds = [];
+
     this.rooms.forEach((room) => {
-      if (Number.isSafeInteger(room.id)) {
-        numericalRoomIds.push(room.id);
-      }
+      allIds.push(room.id);
     });
 
-    return Math.max(...numericalRoomIds) + 1;
+    return allIds;
+  }
+  get newRoomId() {
+    const numericalRoomIds = this.allRoomIds.filter((id) =>
+      Number.isSafeInteger(id)
+    );
+
+    if (numericalRoomIds.length > 0) {
+      return Math.max(...numericalRoomIds) + 1;
+    }
+    return 1;
   }
   get newRoom() {
     return {
@@ -97,6 +107,13 @@ export default class Nsweditor {
     this.addRoomButton.onclick = () => {
       this.addNewRoom();
     };
+    this.roomIdInput.onchange = () => {
+      const inputValue = this.roomIdInput.value;
+      if (this.currentRoom.id !== inputValue) {
+        this.changeCurrentRoomId(inputValue);
+      }
+    };
+
     this.updateUI();
   }
   updateUI() {
@@ -160,5 +177,44 @@ export default class Nsweditor {
       this.currentRoom.east && this.currentRoom.east.label
         ? this.currentRoom.east.label
         : "";
+  }
+  idIsTaken(value) {
+    return this.allRoomIds.includes(value);
+  }
+  /**
+   * checks if the provided value is a valid id. meaning - it's a string with only alphanumeric characters
+   * and another room does not already have that id
+   */
+  isValidId(value) {
+    if (this.idIsTaken(value)) {
+      return false;
+    }
+
+    if (
+      typeof value === "string" &&
+      value !== "" &&
+      stringContainsAlphanumericOnly(value)
+    ) {
+      return true;
+    }
+
+    return false;
+  }
+  /**
+   * changes the id of the current room to provided value, if value is a valid id.
+   * ACHTUNG: purposefully does not work for room with id = 0 (starting room for the game)
+   *
+   * @param   value  new id
+   */
+  changeCurrentRoomId(value) {
+    // TODO: this should also update linkTo values for all exits that point to the current room
+
+    if (this.isValidId(value) && this.currentRoomId !== 0) {
+      this.currentRoom.id = `${value}`;
+      this.currentRoomId = `${value}`;
+      this.selectRoom(`${value}`);
+    } else {
+      this.roomIdInput.value = `${this.currentRoomId}`;
+    }
   }
 }
