@@ -72,7 +72,28 @@ export default class Nsweditor {
       "#east-exit-linkto-select"
     );
   }
+  get newRoomId() {
+    const numericalRoomIds = [];
+    this.rooms.forEach((room) => {
+      if (Number.isSafeInteger(room.id)) {
+        numericalRoomIds.push(room.id);
+      }
+    });
+
+    return Math.max(...numericalRoomIds) + 1;
+  }
+  get newRoom() {
+    return {
+      id: this.newRoomId,
+      textColor: "white",
+      backgroundColor: "royalblue",
+      description: "new room",
+    };
+  }
   initialize() {
+    this.addRoomButton.onclick = () => {
+      this.addNewRoom();
+    };
     this.updateUI();
   }
   updateUI() {
@@ -104,6 +125,10 @@ export default class Nsweditor {
   selectRoom(id) {
     this.currentRoomId = id;
     this.roomPreview.currentRoomId = id;
+    this.updateUI();
+  }
+  addNewRoom() {
+    this.rooms.push(this.newRoom);
     this.updateUI();
   }
 }
