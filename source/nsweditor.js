@@ -103,6 +103,22 @@ export default class Nsweditor {
       description: "new room",
     };
   }
+  get directions() {
+    return {
+      n: "north",
+      s: "south",
+      w: "west",
+      e: "east",
+    };
+  }
+  get allDirections() {
+    return [
+      this.directions.n,
+      this.directions.s,
+      this.directions.w,
+      this.directions.e,
+    ];
+  }
   initialize() {
     this.addRoomButton.onclick = () => {
       this.addNewRoom();
@@ -209,14 +225,44 @@ export default class Nsweditor {
    * @param   value  new id
    */
   changeCurrentRoomId(value) {
-    // TODO: this should also update linkTo values for all exits that point to the current room
-
     if (this.isValidId(value) && this.currentRoomId !== 0) {
+      this.changeLinksToCurrentRoom(this.currentRoomId, value);
       this.currentRoom.id = `${value}`;
       this.currentRoomId = `${value}`;
       this.selectRoom(`${value}`);
     } else {
       this.roomIdInput.value = `${this.currentRoomId}`;
     }
+  }
+  changeLinksToCurrentRoom(oldId, newId) {
+    const allExits = this.getAllExits();
+
+    allExits.forEach((exit) => {
+      if (exit.linkTo === oldId) {
+        exit.linkTo = newId;
+      }
+    });
+  }
+  getRoomExits(room) {
+    const exits = [];
+    this.allDirections.forEach((direction) => {
+      if (room[direction]) {
+        exits.push(room[direction]);
+      }
+    });
+
+    return exits;
+  }
+  getAllExits() {
+    const allExits = [];
+    this.rooms.forEach((room) => {
+      const roomExits = this.getRoomExits(room);
+
+      if (roomExits.length > 0) {
+        allExits.push(...roomExits);
+      }
+    });
+
+    return allExits;
   }
 }
