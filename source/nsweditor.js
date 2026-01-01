@@ -146,6 +146,34 @@ export default class Nsweditor {
       this.changeCurrentRoomDescription(inputValue);
     };
 
+    this.northExitLinktoSelect.onchange = () => {
+      this.changeCurrentRoomExitLinkto(
+        this.northExitLinktoSelect.value,
+        this.directions.n
+      );
+    };
+
+    this.southExitLinktoSelect.onchange = () => {
+      this.changeCurrentRoomExitLinkto(
+        this.southExitLinktoSelect.value,
+        this.directions.s
+      );
+    };
+
+    this.westExitLinktoSelect.onchange = () => {
+      this.changeCurrentRoomExitLinkto(
+        this.westExitLinktoSelect.value,
+        this.directions.w
+      );
+    };
+
+    this.eastExitLinktoSelect.onchange = () => {
+      this.changeCurrentRoomExitLinkto(
+        this.eastExitLinktoSelect.value,
+        this.directions.e
+      );
+    };
+
     this.updateUI();
   }
   updateUI() {
@@ -211,6 +239,43 @@ export default class Nsweditor {
       this.currentRoom.east && this.currentRoom.east.label
         ? this.currentRoom.east.label
         : "";
+
+    this.northExitLinktoSelect.disabled = !this.currentRoom.north;
+    this.southExitLinktoSelect.disabled = !this.currentRoom.south;
+    this.westExitLinktoSelect.disabled = !this.currentRoom.west;
+    this.eastExitLinktoSelect.disabled = !this.currentRoom.east;
+    this.northExitLabelInput.disabled = !this.currentRoom.north;
+    this.southExitLabelInput.disabled = !this.currentRoom.south;
+    this.westExitLabelInput.disabled = !this.currentRoom.west;
+    this.eastExitLabelInput.disabled = !this.currentRoom.east;
+
+    if (this.currentRoom.north) {
+      this.updateLinktoDropdownOptions(this.northExitLinktoSelect);
+      this.northExitLinktoSelect.value = this.currentRoom.north.linkTo;
+    }
+    if (this.currentRoom.south) {
+      this.updateLinktoDropdownOptions(this.southExitLinktoSelect);
+      this.southExitLinktoSelect.value = this.currentRoom.south.linkTo;
+    }
+    if (this.currentRoom.west) {
+      this.updateLinktoDropdownOptions(this.westExitLinktoSelect);
+      this.westExitLinktoSelect.value = this.currentRoom.west.linkTo;
+    }
+    if (this.currentRoom.east) {
+      this.updateLinktoDropdownOptions(this.eastExitLinktoSelect);
+      this.eastExitLinktoSelect.value = this.currentRoom.east.linkTo;
+    }
+  }
+  updateLinktoDropdownOptions(dropdown) {
+    const options = [];
+    this.allRoomIds.forEach((id) => {
+      const newOption = document.createElement("option");
+      newOption.value = id;
+      newOption.text = id;
+      options.push(newOption);
+    });
+
+    dropdown.replaceChildren(...options);
   }
   idIsTaken(value) {
     return this.allRoomIds.includes(value);
@@ -304,5 +369,13 @@ export default class Nsweditor {
     } else {
       this.roomDescriptionInput.value = `${this.currentRoom.description}`;
     }
+  }
+  changeCurrentRoomExitLinkto(value, direction) {
+    if (Number.isSafeInteger(parseInt(value))) {
+      this.currentRoom[direction].linkTo = parseInt(value);
+    } else {
+      this.currentRoom[direction].linkTo = value;
+    }
+    this.updateUI();
   }
 }
