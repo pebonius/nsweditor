@@ -1,5 +1,5 @@
 import RoomPreview from "./roomPreview.js";
-import { stringContainsAlphanumericOnly } from "./utilities.js";
+import { isColor, stringContainsAlphanumericOnly } from "./utilities.js";
 
 export default class Nsweditor {
   #startingRooms = [
@@ -123,11 +123,27 @@ export default class Nsweditor {
     this.addRoomButton.onclick = () => {
       this.addNewRoom();
     };
+
     this.roomIdInput.onchange = () => {
       const inputValue = this.roomIdInput.value;
       if (this.currentRoom.id !== inputValue) {
         this.changeCurrentRoomId(inputValue);
       }
+    };
+
+    this.roomTextColorInput.onchange = () => {
+      const inputValue = this.roomTextColorInput.value;
+      this.changeCurrentRoomTextColor(inputValue);
+    };
+
+    this.roomBackgroundColorInput.onchange = () => {
+      const inputValue = this.roomBackgroundColorInput.value;
+      this.changeCurrentRoomBackgroundColor(inputValue);
+    };
+
+    this.roomDescriptionInput.onchange = () => {
+      const inputValue = this.roomDescriptionInput.value;
+      this.changeCurrentRoomDescription(inputValue);
     };
 
     this.updateUI();
@@ -264,5 +280,29 @@ export default class Nsweditor {
     });
 
     return allExits;
+  }
+  changeCurrentRoomTextColor(value) {
+    if (isColor(value)) {
+      this.currentRoom.textColor = `${value}`;
+      this.updateUI();
+    } else {
+      this.roomTextColorInput.value = `${this.currentRoom.textColor}`;
+    }
+  }
+  changeCurrentRoomBackgroundColor(value) {
+    if (isColor(value)) {
+      this.currentRoom.backgroundColor = `${value}`;
+      this.updateUI();
+    } else {
+      this.roomBackgroundColorInput.value = `${this.currentRoom.backgroundColor}`;
+    }
+  }
+  changeCurrentRoomDescription(value) {
+    if (typeof value === "string") {
+      this.currentRoom.description = `${value}`;
+      this.updateUI();
+    } else {
+      this.roomDescriptionInput.value = `${this.currentRoom.description}`;
+    }
   }
 }
