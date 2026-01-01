@@ -52,7 +52,6 @@ that's it i think?
 
 ## TODO
 
-- room id gets parsed to number if safe integer (but not if `0`!)
 - load a data.json file
 
 later:

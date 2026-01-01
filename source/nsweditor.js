@@ -1,5 +1,9 @@
 import RoomPreview from "./roomPreview.js";
-import { isColor, stringContainsAlphanumericOnly } from "./utilities.js";
+import {
+  isColor,
+  stringContainsAlphanumericOnly,
+  stringContainsNumericOnly,
+} from "./utilities.js";
 
 export default class Nsweditor {
   #startingRooms = [
@@ -402,12 +406,18 @@ export default class Nsweditor {
    *
    * @param   value  new id
    */
+  isNumericId(value) {
+    return (
+      stringContainsNumericOnly(value) && Number.isSafeInteger(parseInt(value))
+    );
+  }
   changeCurrentRoomId(value) {
     if (this.isValidId(value) && this.currentRoomId !== 0) {
-      this.changeLinksToCurrentRoom(this.currentRoomId, value);
-      this.currentRoom.id = `${value}`;
-      this.currentRoomId = `${value}`;
-      this.selectRoom(`${value}`);
+      const newId = this.isNumericId(value) ? parseInt(value) : value;
+      this.changeLinksToCurrentRoom(this.currentRoomId, newId);
+      this.currentRoom.id = newId;
+      this.currentRoomId = newId;
+      this.selectRoom(newId);
     } else {
       this.roomIdInput.value = `${this.currentRoomId}`;
     }
