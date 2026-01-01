@@ -146,6 +146,55 @@ export default class Nsweditor {
       this.changeCurrentRoomDescription(inputValue);
     };
 
+    // exit checkboxes
+    this.northExitCheckbox.onchange = () => {
+      this.enableDisableExit(this.directions.n, this.northExitCheckbox.checked);
+    };
+    this.southExitCheckbox.onchange = () => {
+      this.enableDisableExit(this.directions.s, this.southExitCheckbox.checked);
+    };
+    this.westExitCheckbox.onchange = () => {
+      this.enableDisableExit(this.directions.w, this.westExitCheckbox.checked);
+    };
+    this.eastExitCheckbox.onchange = () => {
+      this.enableDisableExit(this.directions.e, this.eastExitCheckbox.checked);
+    };
+
+    // exit label inputs
+    this.northExitLabelInput.onchange = () => {
+      const inputValue = this.northExitLabelInput.value;
+      this.changeCurrentRoomExitLabel(
+        inputValue,
+        this.directions.n,
+        this.northExitLabelInput
+      );
+    };
+    this.southExitLabelInput.onchange = () => {
+      const inputValue = this.southExitLabelInput.value;
+      this.changeCurrentRoomExitLabel(
+        inputValue,
+        this.directions.s,
+        this.southExitLabelInput
+      );
+    };
+    this.westExitLabelInput.onchange = () => {
+      const inputValue = this.westExitLabelInput.value;
+      this.changeCurrentRoomExitLabel(
+        inputValue,
+        this.directions.w,
+        this.westExitLabelInput
+      );
+    };
+    this.eastExitLabelInput.onchange = () => {
+      const inputValue = this.eastExitLabelInput.value;
+      this.changeCurrentRoomExitLabel(
+        inputValue,
+        this.directions.e,
+        this.eastExitLabelInput
+      );
+    };
+
+    // exit linkto dropdowns
     this.northExitLinktoSelect.onchange = () => {
       this.changeCurrentRoomExitLinkto(
         this.northExitLinktoSelect.value,
@@ -368,6 +417,25 @@ export default class Nsweditor {
       this.updateUI();
     } else {
       this.roomDescriptionInput.value = `${this.currentRoom.description}`;
+    }
+  }
+  enableDisableExit(direction, enabled) {
+    if (enabled) {
+      this.currentRoom[direction] = {
+        label: "new exit",
+        linkTo: 0,
+      };
+    } else {
+      delete this.currentRoom[direction];
+    }
+    this.updateUI();
+  }
+  changeCurrentRoomExitLabel(value, direction, input) {
+    if (typeof value === "string") {
+      this.currentRoom[direction].label = `${value}`;
+      this.updateUI();
+    } else {
+      input.value = `${this.currentRoom[direction].label}`;
     }
   }
   changeCurrentRoomExitLinkto(value, direction) {
