@@ -10,11 +10,13 @@
   <body>
     <main id="editor-container">
       <div id="room-list-container">
-        <p>rooms</p>
+        <div class="window-top-bar">
+          <p class="top-bar-title" id="room-list-top-bar-title">rooms</p>
+          <button class="top-bar-button" id="add-room-button">&#10133;</button>
+        </div>
         <ul id="room-list">
           <li>some room</li>
         </ul>
-        <button id="add-room-button">add room</button>
       </div>
       <div id="room-preview">
         <h1 id="room-description">some description</h1>
@@ -32,11 +34,16 @@
         </button>
       </div>
       <div id="json-code-container">
-        <p>data.json</p>
+        <div class="window-top-bar">
+          <p class="top-bar-title" id="room-list-top-bar-title">data.json</p>
+        </div>
         <textarea id="json-code" readonly>placeholder</textarea>
       </div>
       <div id="room-props-container">
-        <p>room props</p>
+        <div class="window-top-bar">
+          <p class="top-bar-title" id="room-props-top-bar-title">room</p>
+          <button class="top-bar-button" id="room-delete-button">❌</button>
+        </div>
         <ul id="room-props">
           <li>
             <label for="room-id-input">id:</label>

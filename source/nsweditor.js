@@ -72,6 +72,8 @@ export default class Nsweditor {
     this.eastExitLinktoSelect = document.querySelector(
       "#east-exit-linkto-select"
     );
+    this.propsTopBarTitle = document.querySelector("#room-props-top-bar-title");
+    this.roomDeleteButton = document.querySelector("#room-delete-button");
   }
   get currentRoom() {
     return this.rooms.find((room) => room.id === this.currentRoomId);
@@ -120,10 +122,17 @@ export default class Nsweditor {
     ];
   }
   initialize() {
+    // add room button
     this.addRoomButton.onclick = () => {
       this.addNewRoom();
     };
 
+    // delete room button
+    this.roomDeleteButton.onclick = () => {
+      this.deleteCurrentRoom();
+    };
+
+    // room prop inputs
     this.roomIdInput.onchange = () => {
       const inputValue = this.roomIdInput.value;
       if (this.currentRoom.id !== inputValue) {
@@ -229,7 +238,12 @@ export default class Nsweditor {
     this.displayJson();
     this.displayList();
     this.roomPreview.displayCurrentRoom();
+    this.updatePropWindowBar();
     this.updatePropInputs();
+  }
+  updatePropWindowBar() {
+    this.propsTopBarTitle.innerText = `room [${this.currentRoomId}]`;
+    this.roomDeleteButton.disabled = this.currentRoomId === 0;
   }
   displayJson() {
     const json = JSON.stringify(this.rooms, undefined, 4);
@@ -261,6 +275,17 @@ export default class Nsweditor {
   addNewRoom() {
     this.rooms.push(this.newRoom);
     this.updateUI();
+  }
+  deleteCurrentRoom() {
+    if (this.currentRoomId !== 0) {
+      const index = this.rooms.indexOf(this.currentRoom);
+
+      if (index > -1) {
+        this.rooms.splice(index, 1);
+      }
+    }
+
+    this.selectRoom(0);
   }
   updatePropInputs() {
     this.roomIdInput.value = this.currentRoom.id;

@@ -22,9 +22,10 @@ on the right hand side you will see the `data.json` output. when your game is re
 
 ## TODO
 
-- deleting room from list
-  - cannot delete starting room
-- change add room button to a plus at top of list
+- room id gets parsed to number if safe integer (but not if `0`!)
 - go between rooms using exit buttons in preview
-- loading rooms from data.json?
+- load a data.json file
+
+later:
+- change starting room?
 - highlight current room in data.json?
