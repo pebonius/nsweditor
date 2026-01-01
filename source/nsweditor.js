@@ -232,7 +232,30 @@ export default class Nsweditor {
       );
     };
 
+    this.addPreviewButtonOnClickEvents();
+
     this.updateUI();
+  }
+  getExitButton(direction) {
+    return document.querySelector(`#${direction}-exit-button`);
+  }
+  addPreviewButtonOnClickEvents() {
+    this.allDirections.forEach((direction) => {
+      const exitButton = this.getExitButton(direction);
+
+      exitButton.onclick = () => {
+        this.go(direction);
+      };
+    });
+  }
+  go(direction) {
+    if (!this.currentRoom[direction]) {
+      return;
+    }
+    if (this.currentRoom[direction].linkTo === undefined) {
+      return;
+    }
+    this.selectRoom(this.currentRoom[direction].linkTo);
   }
   updateUI() {
     this.displayJson();
