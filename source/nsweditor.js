@@ -273,8 +273,10 @@ export default class Nsweditor {
     this.roomDeleteButton.disabled = this.currentRoomId === 0;
   }
   displayJson() {
-    const json = JSON.stringify(this.rooms, undefined, 4);
-    this.jsonCodeArea.textContent = json;
+    const jsonOutput = {
+      rooms: this.rooms,
+    };
+    this.jsonCodeArea.textContent = JSON.stringify(jsonOutput, undefined, 4);
   }
   displayList() {
     const newListChildren = [];

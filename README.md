@@ -49,12 +49,3 @@ when your game is ready, copy this output (all of it) into the `data.json` file 
 this output must replace all the previous content of the file, otherwise you'll get errors.
 
 that's it i think?
-
-## TODO
-
-- load a data.json file
-
-later:
-
-- change starting room?
-- highlight current room in data.json?
